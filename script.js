@@ -1,33 +1,50 @@
-document.querySelector('form').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevenir que la página se recargue al enviar el formulario
+// Referencias a los elementos del formulario
+const formulario = document.getElementById('formulario');
+const cantidadPescadoInput = document.getElementById('cantidadPescado');
+const precioPescadoInput = document.getElementById('precioPescado');
+const gastoTotalInput = document.getElementById('gastoTotal');
+const tripulantesSelect = document.getElementById('tripulantes');
+const totalPescadoInput = document.getElementById('totalPescado');
+const resultadoInput = document.getElementById('resultado');
+const resetButton = document.getElementById('resetButton');
 
-    // Obtener los valores de los campos
-    const cantidadPescado = parseFloat(document.querySelector('#cantidadPescado').value);
-    const precioPescado = parseFloat(document.querySelector('#precioPescado').value);
-    const gastoTotal = parseFloat(document.querySelector('#gastoTotal').value);
-    const tripulantes = parseInt(document.querySelector('#tripulantes').value);
+// Función para calcular el total (cantidad × precio)
+function calcularTotalPescado() {
+    const cantidadPescado = parseFloat(cantidadPescadoInput.value);
+    const precioPescado = parseFloat(precioPescadoInput.value);
 
-    // Validar que los valores sean números
-    if (isNaN(cantidadPescado) || isNaN(precioPescado) || isNaN(gastoTotal) || isNaN(tripulantes)) {
-        alert('Por favor, ingrese valores numéricos válidos.');
+
+
+    const totalPescado = cantidadPescado * precioPescado;
+    totalPescadoInput.value = totalPescado.toFixed(2); // Mostrar con 2 decimales
+}
+
+// Función para calcular el resultado final
+function calcularResultado(event) {
+    event.preventDefault(); // Prevenir que la página se recargue
+
+    const totalPescado = parseFloat(totalPescadoInput.value);
+    const gastoTotal = parseFloat(gastoTotalInput.value);
+    const tripulantes = parseInt(tripulantesSelect.value);
+
+    if (isNaN(totalPescado) || isNaN(gastoTotal) || isNaN(tripulantes)) {
+        alert('Por favor, ingrese todos los valores necesarios para realizar el cálculo.');
         return;
     }
 
-    // Realizar los cálculos
-    const total = cantidadPescado * precioPescado;
-    const resultado = (total - gastoTotal) / tripulantes;
-
-    // Mostrar el resultado en el campo de entrada
-    const resultadoInput = document.querySelector('#resultado');
+    const resultado = (totalPescado - gastoTotal) / tripulantes;
     resultadoInput.value = resultado.toFixed(2); // Mostrar con 2 decimales
-});
+}
 
-// Lógica para reiniciar los campos del formulario
-document.querySelector('#resetButton').addEventListener('click', function () {
-    // Obtener el formulario y reiniciarlo
-    const formulario = document.querySelector('#formulario');
-    formulario.reset();
+// Función para reiniciar todos los campos
+function reiniciarCampos() {
+    formulario.reset(); // Reiniciar el formulario
+    totalPescadoInput.value = ''; // Limpiar el campo calculado
+    resultadoInput.value = ''; // Limpiar el campo resultado
+}
 
-    // También borrar el campo de resultado si no se reinicia automáticamente
-    document.querySelector('#resultado').value = '';
-});
+// Agregar eventos
+cantidadPescadoInput.addEventListener('input', calcularTotalPescado);
+precioPescadoInput.addEventListener('input', calcularTotalPescado);
+formulario.addEventListener('submit', calcularResultado);
+resetButton.addEventListener('click', reiniciarCampos);
