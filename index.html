@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina web pesca</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Bienvenido a la pagina web para Calcular</h1>
+    <form id="formulario">
+        <label for="cantidadPescado">Ingresar cantidad de pescado en KG</label><br>
+        <input type="text" id="cantidadPescado"><br>
+
+        <label for="precioPescado">Ingresar el precio del pescado</label><br>
+        <input type="text" id="precioPescado"><br>
+
+        <label for="gastoTotal">Ingresar el gasto total</label><br>
+        <input type="text" id="gastoTotal"><br>
+
+        <label for="tripulantes">Seleccionar cantidad de tripulantes</label><br>
+        <select id="tripulantes" name="tripulantes">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select><br><br>
+
+        <button type="submit">Calcular</button>
+        <button type="button" id="resetButton">Reiniciar</button><br><br>
+
+        <label for="resultado">El resultado es :</label>
+        <input type="text" id="resultado" readonly><br>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
