@@ -1,4 +1,4 @@
-/* Estilo global */
+/* Contenedor general */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -9,16 +9,10 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    overflow: hidden; /* Evitar barras innecesarias */
 }
 
-/* Encabezado */
-h1 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Contenedor del formulario */
+/* Contenedor para el formulario con scroll */
 form {
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -26,20 +20,25 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
+    max-height: 90vh; /* Límite máximo del formulario en pantalla */
+    overflow-y: auto; /* Agregar scroll vertical si es necesario */
     text-align: center;
 }
 
-/* Etiquetas */
-form label {
-    font-size: 14px;
-    color: #555;
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
+/* Ajuste del título */
+h1 {
+    font-size: 24px;
+    margin: 20px;
 }
 
-/* Campos de texto */
+/* Imagen */
+img {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+/* Inputs y botones */
 form input[type="text"],
 form select {
     width: calc(100% - 20px);
@@ -50,14 +49,6 @@ form select {
     font-size: 14px;
 }
 
-/* Campo de selección */
-form select {
-    background-color: #ffffff;
-    color: #555;
-    cursor: pointer;
-}
-
-/* Botones */
 form button {
     background-color: #007bff;
     color: white;
@@ -67,23 +58,49 @@ form button {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 48%; /* Ocupa menos espacio para alinearlos */
+    margin: 5px;
+    width: 48%; /* Espacio compartido entre botones */
 }
 
 form button:hover {
     background-color: #0056b3;
 }
 
-/* Estilo para separar botones */
-form .button-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+/* Tabla de productos */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
 }
 
-/* Resultado */
-form input[readonly] {
-    background-color: #f4f4f9;
+th, td {
     border: 1px solid #ddd;
-    color: #555;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    form {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    table {
+        font-size: 12px; /* Reducir tamaño de texto en la tabla */
+    }
+
+    form button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
 }
