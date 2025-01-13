@@ -1,50 +1,88 @@
-// Referencias a los elementos del formulario
-const formulario = document.getElementById('formulario');
+// Referencias a elementos
 const cantidadPescadoInput = document.getElementById('cantidadPescado');
 const precioPescadoInput = document.getElementById('precioPescado');
-const gastoTotalInput = document.getElementById('gastoTotal');
-const tripulantesSelect = document.getElementById('tripulantes');
 const totalPescadoInput = document.getElementById('totalPescado');
+const productoInput = document.getElementById('producto');
+const precioProductoInput = document.getElementById('precioProducto');
+const cantidadProductoInput = document.getElementById('cantidadProducto');
+const tablaProductosBody = document.querySelector('#tablaProductos tbody');
+const gastoTotalInput = document.getElementById('gastoTotal');
+const agregarProductoButton = document.getElementById('agregarProducto');
+const formulario = document.getElementById('formulario');
 const resultadoInput = document.getElementById('resultado');
-const resetButton = document.getElementById('resetButton');
+const tripulantesSelect = document.getElementById('tripulantes');
 
-// Función para calcular el total (cantidad × precio)
+// Variables
+let productos = [];
+
+// Calcular total de pescado
 function calcularTotalPescado() {
-    const cantidadPescado = parseFloat(cantidadPescadoInput.value);
-    const precioPescado = parseFloat(precioPescadoInput.value);
+    const cantidad = parseFloat(cantidadPescadoInput.value);
+    const precio = parseFloat(precioPescadoInput.value);
 
-
-
-    const totalPescado = cantidadPescado * precioPescado;
-    totalPescadoInput.value = totalPescado.toFixed(2); // Mostrar con 2 decimales
+    if (!isNaN(cantidad) && !isNaN(precio)) {
+        totalPescadoInput.value = (cantidad * precio).toFixed(2);
+        calcularGastoTotal();
+    } else {
+        totalPescadoInput.value = '';
+    }
 }
 
-// Función para calcular el resultado final
-function calcularResultado(event) {
-    event.preventDefault(); // Prevenir que la página se recargue
+// Agregar productos adicionales
+function agregarProducto() {
+    const producto = productoInput.value.trim();
+    const precio = parseFloat(precioProductoInput.value);
+    const cantidad = parseInt(cantidadProductoInput.value);
 
-    const totalPescado = parseFloat(totalPescadoInput.value);
+    if (producto && !isNaN(precio) && !isNaN(cantidad)) {
+        productos.push({ producto, precio, cantidad, subtotal: precio * cantidad });
+        actualizarTabla();
+        calcularGastoTotal();
+        productoInput.value = '';
+        precioProductoInput.value = '';
+        cantidadProductoInput.value = '';
+    } else {
+        alert('Datos inválidos.');
+    }
+}
+
+// Actualizar tabla
+function actualizarTabla() {
+    tablaProductosBody.innerHTML = '';
+    productos.forEach(item => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${item.producto}</td>
+            <td>${item.precio.toFixed(2)}</td>
+            <td>${item.cantidad}</td>
+            <td>${item.subtotal.toFixed(2)}</td>
+        `;
+        tablaProductosBody.appendChild(fila);
+    });
+}
+
+// Calcular gasto total
+function calcularGastoTotal() {
+    const totalProductos = productos.reduce((acc, item) => acc + item.subtotal, 0);
+    const totalPescado = parseFloat(totalPescadoInput.value) || 0;
+    gastoTotalInput.value = (totalProductos + totalPescado).toFixed(2);
+}
+
+// Calcular resultado final
+function calcularResultado(event) {
+    event.preventDefault();
     const gastoTotal = parseFloat(gastoTotalInput.value);
     const tripulantes = parseInt(tripulantesSelect.value);
 
-    if (isNaN(totalPescado) || isNaN(gastoTotal) || isNaN(tripulantes)) {
-        alert('Por favor, ingrese todos los valores necesarios para realizar el cálculo.');
-        return;
+    if (!isNaN(gastoTotal) && tripulantes > 0) {
+        resultadoInput.value = (gastoTotal / tripulantes).toFixed(2);
+    } else {
+        alert('Error en los datos.');
     }
-
-    const resultado = (totalPescado - gastoTotal) / tripulantes;
-    resultadoInput.value = resultado.toFixed(2); // Mostrar con 2 decimales
 }
 
-// Función para reiniciar todos los campos
-function reiniciarCampos() {
-    formulario.reset(); // Reiniciar el formulario
-    totalPescadoInput.value = ''; // Limpiar el campo calculado
-    resultadoInput.value = ''; // Limpiar el campo resultado
-}
-
-// Agregar eventos
+// Eventos
 cantidadPescadoInput.addEventListener('input', calcularTotalPescado);
 precioPescadoInput.addEventListener('input', calcularTotalPescado);
+agregarProductoButton.addEventListener('click', agregarProducto);
 formulario.addEventListener('submit', calcularResultado);
-resetButton.addEventListener('click', reiniciarCampos);
