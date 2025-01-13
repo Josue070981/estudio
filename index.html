@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina web pesca</title>
+    <title>Calculadora de Gastos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Bienvenido a la pagina web para Calcular</h1>
+    <h1>Bienvenido a la página web para Calcular</h1>
+    <img src="imagenes/shark-jaws_38120.png" alt="Icono de tiburón">
+
     <form id="formulario">
+        <!-- Formulario original -->
         <label for="cantidadPescado">Ingresar cantidad de pescado en KG</label><br>
         <input type="text" id="cantidadPescado"><br>
 
@@ -18,8 +21,38 @@
         <label for="totalPescado">Total (cantidad × precio):</label>
         <input type="text" id="totalPescado" readonly><br>
 
+        <!-- Nueva sección para agregar productos -->
+        <h3>Agregar Productos Adicionales</h3>
+        <label for="producto">Producto:</label><br>
+        <input type="text" id="producto" placeholder="Nombre del producto"><br>
+
+        <label for="precioProducto">Precio del producto:</label><br>
+        <input type="text" id="precioProducto" placeholder="Precio"><br>
+
+        <label for="cantidadProducto">Cantidad:</label><br>
+        <input type="text" id="cantidadProducto" placeholder="Cantidad"><br>
+
+        <button type="button" id="agregarProducto">Agregar Producto</button><br><br>
+
+        <h3>Lista de Productos:</h3>
+        <table id="tablaProductos">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table><br>
+
+        <label for="gastoTotal">Gasto Total:</label>
+        <input type="text" id="gastoTotal" readonly><br><br>
+
+        <!-- Parte original del formulario -->
         <label for="gastoTotal">Ingresar el gasto total</label><br>
-        <input type="text" id="gastoTotal"><br>
+        <input type="text" id="gastoExtra"><br>
 
         <label for="tripulantes">Seleccionar cantidad de tripulantes</label><br>
         <select id="tripulantes" name="tripulantes">
